@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Olu Adun — Senior Product Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0F1923;
+  --ink-soft: #3D4F5C;
+  --ink-muted: #7A8FA0;
+  --bg: #F5F2ED;
+  --bg-card: #FDFCF9;
+  --accent: #1B6B93;
+  --accent-warm: #C4622D;
+  --accent-light: #E8F3F9;
+  --border: #DDD8D0;
+  --tag-bg: #EAE6DE;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── NAVIGATION ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.1rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(245,242,237,0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  padding-top: 72px;
+}
+
+.hero-left {
+  padding: 5rem 3rem 4rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.hero-name em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-title {
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  font-weight: 400;
+  margin-bottom: 2rem;
+  max-width: 420px;
+  line-height: 1.5;
+}
+
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  max-width: 400px;
+}
+
+.metric {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--accent);
+}
+
+.metric-num {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+.btn-primary:hover { background: #155778; transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── HERO RIGHT ── */
+.hero-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 3rem;
+  overflow: hidden;
+}
+
+.hero-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent-light) 0%, #F0EBE3 100%);
+  opacity: 0.6;
+}
+
+.hero-visual {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+}
+
+.product-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 40px rgba(15,25,35,0.08);
+  margin-bottom: 1rem;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.product-card:nth-child(2) { animation-delay: 0.5s; margin-left: 1.5rem; }
+.product-card:nth-child(3) { animation-delay: 1s; margin-left: 0.75rem; }
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.card-icon.blue { background: var(--accent-light); }
+.card-icon.warm { background: #FDEEE6; }
+.card-icon.green { background: #E6F4EF; }
+
+.card-title { font-weight: 600; font-size: 0.9rem; }
+.card-sub { font-size: 0.75rem; color: var(--ink-muted); }
+
+.card-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.card-stat-num {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+
+.progress-bar {
+  height: 4px;
+  background: var(--tag-bg);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 1.5s ease;
+}
+
+/* ── SECTION BASE ── */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.section-header {
+  margin-bottom: 3rem;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* ── ABOUT STRIP ── */
+.about-strip {
+  background: var(--ink);
+  color: white;
+  padding: 4rem 0;
+}
+
+.about-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-label {
+  font-family: var(--serif);
+  font-size: 2rem;
+  line-height: 1.15;
+  color: white;
+}
+
+.about-label em { color: #7BB8D4; font-style: italic; }
+
+.about-text {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.75);
+}
+
+.about-text strong { color: white; font-weight: 600; }
+
+/* ── CASE STUDIES ── */
+.cases-section {
+  padding: 6rem 0;
+}
+
+.cases-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.case-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.case-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(15,25,35,0.1);
+}
+
+.case-card.featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.case-visual {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.case-card.featured .case-visual {
+  height: auto;
+  min-height: 240px;
+}
+
+.case-visual.blue-bg { background: linear-gradient(135deg, #E8F3F9 0%, #C5DFF0 100%); }
+.case-visual.warm-bg { background: linear-gradient(135deg, #FDEEE6 0%, #F5D4C0 100%); }
+.case-visual.green-bg { background: linear-gradient(135deg, #E6F4EF 0%, #C0E0D5 100%); }
+.case-visual.dark-bg { background: linear-gradient(135deg, #1B3A5C 0%, #0F1923 100%); color: white; }
+
+.case-body { padding: 1.5rem; }
+
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  background: var(--tag-bg);
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tag.accent { background: var(--accent-light); color: var(--accent); }
+
+.case-title {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.case-desc {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.case-result {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.case-result::before {
+  content: '→';
+  font-size: 1rem;
+}
+
+/* ── SKILLS ── */
+.skills-section {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 5rem 0;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.skill-group {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.skill-group-title {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.skill-tag {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  transition: all 0.15s;
+}
+
+.skill-tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── TIMELINE ── */
+.timeline-section { padding: 6rem 0; }
+
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), var(--border));
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2.5rem;
+  padding-left: 1.5rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: slideIn 0.5s ease forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.25s; }
+.timeline-item:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes slideIn {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -2.35rem;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.timeline-date {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
+.timeline-role {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 0.2rem;
+}
+
+.timeline-company {
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+  margin-bottom: 0.75rem;
+}
+
+.timeline-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.timeline-bullets li {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  padding-left: 1rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.timeline-bullets li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* ── ARTIFACTS ── */
+.artifacts-section { padding: 6rem 0; background: var(--bg-card); border-top: 1px solid var(--border); }
+
+.artifacts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.artifact-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.artifact-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.artifact-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.artifact-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.artifact-desc {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+
+.artifact-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-family: var(--mono);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  margin-top: auto;
+}
+
+.status-live { background: #E6F4EF; color: #1B6B45; }
+.status-soon { background: var(--tag-bg); color: var(--ink-muted); }
+
+/* ── CONTACT ── */
+.contact-section {
+  background: var(--ink);
+  color: white;
+  padding: 5rem 0;
+  text-align: center;
+}
+
+.contact-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.contact-title em { color: #7BB8D4; font-style: italic; }
+
+.contact-sub {
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.contact-link.light {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.contact-link.light:hover { background: rgba(255,255,255,0.18); }
+
+.contact-link.accent {
+  background: var(--accent);
+  color: white;
+}
+.contact-link.accent:hover { background: #155778; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255,255,255,0.35);
+  font-size: 0.78rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 3rem 1.5rem; }
+  .about-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .case-card.featured { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .artifacts-grid { grid-template-columns: 1fr 1fr; }
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Olu Adun</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#artifacts">Artifacts</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Senior Product Manager · She/Her</div>
+    <h1 class="hero-name">Olu<br><em>Adun</em></h1>
+    <p class="hero-title">Building AI-powered products at the intersection of healthcare, data, and human workflow — where complexity meets clarity.</p>
+
+    <div class="hero-metrics">
+      <div class="metric">
+        <div class="metric-num">$1.3M+</div>
+        <div class="metric-label">Annual Savings Delivered</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">~25%</div>
+        <div class="metric-label">ARR Growth Driven</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">20%+</div>
+        <div class="metric-label">Product Adoption Gains</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">9 Yrs</div>
+        <div class="metric-label">Enterprise PM Experience</div>
+      </div>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#work" class="btn btn-primary">View Case Studies</a>
+      <a href="Olu_Adun_Senior_PM_Resume.pdf" class="btn btn-outline" download>Download Resume</a>
+      <a href="https://linkedin.com/in/oluadun" class="btn btn-outline" target="_blank">LinkedIn ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="product-card">
+        <div class="card-header">
+          <div class="card-icon blue">🤖</div>
+          <div>
+            <div class="card-title">IDP Automation</div>
+            <div class="card-sub">Prior Auth Processing · Ochsner Health</div>
+          </div>
+        </div>
+        <div class="card-stat">
+          <span style="font-size:0.8rem;color:var(--ink-muted)">Processing time reduction</span>
+          <span class="card-stat-num">28%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+      </div>
+
+      <div class="product-card">
+        <div class="card-header">
+          <div class="card-icon warm">📊</div>
+          <div>
+            <div class="card-title">Clinical AI Assistant</div>
+            <div class="card-sub">Provider Workflow · 0→1 Product</div>
+          </div>
+        </div>
+        <div class="card-stat">
+          <span style="font-size:0.8rem;color:var(--ink-muted)">Paperwork reduction</span>
+          <span class="card-stat-num">30%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:85%" style="background:#C4622D"></div></div>
+      </div>
+
+      <div class="product-card">
+        <div class="card-header">
+          <div class="card-icon green">🛡️</div>
+          <div>
+            <div class="card-title">Fraud Detection Bots</div>
+            <div class="card-sub">Agentic AI · Autonomous Review</div>
+          </div>
+        </div>
+        <div class="card-stat">
+          <span style="font-size:0.8rem;color:var(--ink-muted)">Annual savings</span>
+          <span class="card-stat-num">$1.3M</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:91%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <div class="about-inner">
+    <div class="about-label">A PM who builds at the <em>edge</em> of AI and clinical reality.</div>
+    <p class="about-text">
+      I'm a Senior PM with deep expertise in <strong>Health IT, clinical AI, and regulated enterprise platforms</strong>. My work sits where AI meets real-world clinical operations — prior authorization, EHR interoperability, fraud detection, and provider workflow automation. I've shipped products that clinicians actually use, payers actually trust, and engineers actually want to build.<br><br>
+      Before healthcare, I led Agile transformation and data-driven delivery in <strong>insurance at State Farm</strong>, giving me a rare payer-and-provider perspective that most PMs simply don't have. I hold a <strong>CSM, CSPO, LSSGB, and Tableau Desktop Specialist</strong> certification, and an M.S. in Industrial Engineering from LSU.
+    </p>
+  </div>
+</div>
+
+<!-- CASE STUDIES -->
+<section class="cases-section" id="work">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Case Studies</div>
+      <h2 class="section-title">Products Built.<br>Problems Solved.</h2>
+    </div>
+
+    <div class="cases-grid">
+
+      <!-- FEATURED -->
+      <a href="cases/idp-prior-auth.html" class="case-card featured reveal">
+        <div class="case-visual blue-bg">
+          <span style="font-size:4rem">🤖</span>
+        </div>
+        <div class="case-body">
+          <div class="case-tags">
+            <span class="tag accent">Featured</span>
+            <span class="tag">Healthcare AI</span>
+            <span class="tag">Automation</span>
+            <span class="tag">IDP</span>
+          </div>
+          <h3 class="case-title">Intelligent Document Processing for Prior Authorization</h3>
+          <p class="case-desc">Led end-to-end product ownership for an AI-powered IDP rollout that automated clinical document review, reducing prior authorization processing time by 28% and eliminating manual bottlenecks across a major regional health system.</p>
+          <div class="case-result">$1.3M+ annual savings · 28% processing time reduction · 96% sprint completion</div>
+        </div>
+      </a>
+
+      <a href="cases/clinical-ai-assistant.html" class="case-card reveal">
+        <div class="case-visual warm-bg">
+          <span style="font-size:3rem">🩺</span>
+        </div>
+        <div class="case-body">
+          <div class="case-tags">
+            <span class="tag">0→1 Product</span>
+            <span class="tag">Clinical AI</span>
+          </div>
+          <h3 class="case-title">Clinical AI Assistant: 0→1 Launch</h3>
+          <p class="case-desc">Directed go-to-market strategy for an AI-powered clinical assistant, from provider research through feature delivery — reducing clinical paperwork by 30%.</p>
+          <div class="case-result">30% paperwork reduction · 17% adoption lift</div>
+        </div>
+      </a>
+
+      <a href="cases/fhir-ehr-integration.html" class="case-card reveal">
+        <div class="case-visual green-bg">
+          <span style="font-size:3rem">🔗</span>
+        </div>
+        <div class="case-body">
+          <div class="case-tags">
+            <span class="tag">FHIR</span>
+            <span class="tag">Interoperability</span>
+            <span class="tag">EHR</span>
+          </div>
+          <h3 class="case-title">FHIR-Compliant EHR Integration & Care MVP</h3>
+          <p class="case-desc">Defined technical requirements for FHIR-compliant APIs and mapped data flows between disparate EHR systems to launch an Integrated Care MVP that closed regional care gaps.</p>
+          <div class="case-result">HIPAA-2 compliant · Regional care gaps closed</div>
+        </div>
+      </a>
+
+      <a href="cases/agile-transformation.html" class="case-card reveal">
+        <div class="case-visual dark-bg">
+          <span style="font-size:3rem">⚡</span>
+        </div>
+        <div class="case-body">
+          <div class="case-tags">
+            <span class="tag">Agile Transformation</span>
+            <span class="tag">Insurance</span>
+          </div>
+          <h3 class="case-title">Enterprise Agile Transformation at State Farm</h3>
+          <p class="case-desc">Led a 52-person department from Waterfall to Scrum, establishing a Scrum-of-Scrums framework across claims and policy admin teams. Improved time-to-market by 28%.</p>
+          <div class="case-result">28% faster time-to-market · $1M+ savings identified</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section" id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Capabilities</div>
+      <h2 class="section-title">Technical depth.<br>Domain fluency.</h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">AI & Product Strategy</div>
+        <div class="skill-list">
+          <span class="skill-tag">Clinical AI</span>
+          <span class="skill-tag">Agentic AI</span>
+          <span class="skill-tag">LLM Products</span>
+          <span class="skill-tag">IDP</span>
+          <span class="skill-tag">Prompt Engineering</span>
+          <span class="skill-tag">AI Automation</span>
+          <span class="skill-tag">0→1 Development</span>
+          <span class="skill-tag">AI Workflow Design</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Health IT & Compliance</div>
+        <div class="skill-list">
+          <span class="skill-tag">FHIR</span>
+          <span class="skill-tag">Prior Authorization</span>
+          <span class="skill-tag">EHR Integration</span>
+          <span class="skill-tag">HIPAA</span>
+          <span class="skill-tag">Utilization Management</span>
+          <span class="skill-tag">Interoperability</span>
+          <span class="skill-tag">Claims Processing</span>
+          <span class="skill-tag">HL7</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Data & Analytics</div>
+        <div class="skill-list">
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">Funnel Analysis</span>
+          <span class="skill-tag">A/B Testing</span>
+          <span class="skill-tag">KPI Design</span>
+          <span class="skill-tag">Snowflake</span>
+          <span class="skill-tag">Python (Basics)</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">APIs & Systems</div>
+        <div class="skill-list">
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">Microservices</span>
+          <span class="skill-tag">API Lifecycle Mgmt</span>
+          <span class="skill-tag">Postman</span>
+          <span class="skill-tag">System Design</span>
+          <span class="skill-tag">API Testing</span>
+          <span class="skill-tag">Distributed Systems</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Delivery & Agile</div>
+        <div class="skill-list">
+          <span class="skill-tag">Scrum</span>
+          <span class="skill-tag">SAFe</span>
+          <span class="skill-tag">Kanban</span>
+          <span class="skill-tag">OKRs</span>
+          <span class="skill-tag">Roadmapping</span>
+          <span class="skill-tag">CI/CD</span>
+          <span class="skill-tag">SDLC</span>
+          <span class="skill-tag">Lean Six Sigma</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Tools & Platforms</div>
+        <div class="skill-list">
+          <span class="skill-tag">Jira</span>
+          <span class="skill-tag">Confluence</span>
+          <span class="skill-tag">Azure DevOps</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">Miro</span>
+          <span class="skill-tag">Productboard</span>
+          <span class="skill-tag">Balsamiq</span>
+          <span class="skill-tag">Salesforce</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE TIMELINE -->
+<section class="timeline-section" id="experience">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Experience</div>
+      <h2 class="section-title">9 years of delivery.<br>Built to last.</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">May 2022 – Present</div>
+        <div class="timeline-role">Senior Product Manager</div>
+        <div class="timeline-company">Ochsner Health · Remote / New Orleans, LA</div>
+        <ul class="timeline-bullets">
+          <li>Shipped IDP automation reducing prior auth processing by 28% → $1.3M+ annual savings</li>
+          <li>Drove ~25% ARR growth through strategic roadmap execution across clinical AI platforms</li>
+          <li>Led 0→1 AI clinical assistant from user research through launch — 30% paperwork reduction</li>
+          <li>Defined FHIR-compliant API requirements for EHR integration MVP across disparate systems</li>
+          <li>Deployed autonomous fraud detection bots reducing manual review cycles to under 2 hours</li>
+          <li>Secured 100% HIPAA-2 regulatory compliance for all patient-facing applications</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Feb 2017 – Apr 2022</div>
+        <div class="timeline-role">Business Analyst & Scrum Master</div>
+        <div class="timeline-company">State Farm · Richardson, TX</div>
+        <ul class="timeline-bullets">
+          <li>Led Agile transformation for 52-person department → 28% faster time-to-market</li>
+          <li>Identified $1M+ cost-saving opportunities through SQL analysis and Tableau dashboards</li>
+          <li>Reduced ticket resolution time by 35% via Kanban implementation</li>
+          <li>Built Scrum-of-Scrums framework managing dependencies across claims and policy admin teams</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Education</div>
+        <div class="timeline-role">M.S. Industrial Engineering · B.S. Civil Engineering</div>
+        <div class="timeline-company">Louisiana State University · University of Ibadan</div>
+        <ul class="timeline-bullets">
+          <li>CSM · CSPO · LSSGB · Tableau Desktop Specialist</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTIFACTS -->
+<section class="artifacts-section" id="artifacts">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Artifacts & Documentation</div>
+      <h2 class="section-title">Real work.<br>Real deliverables.</h2>
+    </div>
+    <div class="artifacts-grid reveal">
+      <a href="artifacts/prd-idp-automation.md" class="artifact-card">
+        <div class="artifact-icon">📋</div>
+        <div class="artifact-title">PRD: IDP Prior Auth Automation</div>
+        <div class="artifact-desc">Full product requirements document including problem statement, user stories, acceptance criteria, and success metrics.</div>
+        <span class="artifact-status status-live">● Live</span>
+      </a>
+      <a href="artifacts/user-stories-clinical-ai.md" class="artifact-card">
+        <div class="artifact-icon">📝</div>
+        <div class="artifact-title">User Stories: Clinical AI Assistant</div>
+        <div class="artifact-desc">Epic-Feature-Story structure with acceptance criteria for the clinical AI assistant platform launch.</div>
+        <span class="artifact-status status-live">● Live</span>
+      </a>
+      <a href="artifacts/roadmap-template.md" class="artifact-card">
+        <div class="artifact-icon">🗺️</div>
+        <div class="artifact-title">Product Roadmap Framework</div>
+        <div class="artifact-desc">Outcome-based roadmap template with OKR alignment, prioritization scoring, and stakeholder communication layer.</div>
+        <span class="artifact-status status-live">● Live</span>
+      </a>
+      <a href="artifacts/sql-analysis.md" class="artifact-card">
+        <div class="artifact-icon">🔍</div>
+        <div class="artifact-title">SQL: Clinical Data Analysis Queries</div>
+        <div class="artifact-desc">Sample SQL queries for utilization management reporting, data validation, and KPI tracking dashboards.</div>
+        <span class="artifact-status status-live">● Live</span>
+      </a>
+      <a href="artifacts/bpmn-prior-auth.md" class="artifact-card">
+        <div class="artifact-icon">🔄</div>
+        <div class="artifact-title">BPMN: Prior Auth Workflow</div>
+        <div class="artifact-desc">End-to-end prior authorization process flow mapped in BPMN 2.0 — before and after automation.</div>
+        <span class="artifact-status status-soon">○ Coming Soon</span>
+      </a>
+      <a href="artifacts/okr-framework.md" class="artifact-card">
+        <div class="artifact-icon">🎯</div>
+        <div class="artifact-title">OKR Framework Template</div>
+        <div class="artifact-desc">Structured OKR template with key result scoring, health tracking, and quarterly review cadence.</div>
+        <span class="artifact-status status-soon">○ Coming Soon</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <h2 class="contact-title">Let's build something<br><em>that matters.</em></h2>
+    <p class="contact-sub">Open to Senior PM roles in Health IT, clinical AI, insurtech, and regulated fintech — remote or hybrid.</p>
+    <div class="contact-links">
+      <a href="mailto:oluadun10@gmail.com" class="contact-link accent">✉ oluadun10@gmail.com</a>
+      <a href="https://linkedin.com/in/oluadun" target="_blank" class="contact-link light">LinkedIn ↗</a>
+      <a href="Olu_Adun_Senior_PM_Resume.pdf" class="contact-link light" download>Download Resume</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Olu Adun</span>
+  <span>Senior Product Manager · CSM · CSPO · LSSGB</span>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Animate progress bars on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.progress-fill').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0%';
+      setTimeout(() => bar.style.width = w, 100);
+    });
+  }, 500);
+});
+</script>
+</body>
+</html>
