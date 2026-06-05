@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -110,7 +111,7 @@ body::before {
   gap: 1rem;
 }
 
-.live-badge {
+● Live-badge {
   display: flex;
   align-items: center;
   gap: 0.4rem;
