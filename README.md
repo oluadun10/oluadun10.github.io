@@ -41,7 +41,7 @@ Delivery               Scrum · SAFe · Kanban · OKRs · CI/CD · Lean Six Sigm
 | Project | Type | Outcome |
 |---|---|---|
 | [IDP Prior Authorization Automation](cases/idp-prior-auth.md) | Clinical AI · Healthcare | $3M+ savings · 28% faster processing |
-| [Clinical AI Assistant — 0→1](cases/clinical-ai-assistant.md) | Product Launch · AI | 30% paperwork reduction |
+| [Clinical AI Assistant - 0→1](cases/clinical-ai-assistant.md) | Product Launch · AI | 30% paperwork reduction |
 | [FHIR EHR Integration MVP](cases/fhir-ehr-integration.md) | Interoperability · Health IT | Regional care gaps closed · HIPAA-2 compliant |
 | [Enterprise Agile Transformation](cases/agile-transformation.md) | Delivery · Insurance | 28% faster TTM · $1M+ identified |
 
@@ -49,7 +49,7 @@ Delivery               Scrum · SAFe · Kanban · OKRs · CI/CD · Lean Six Sigm
 
 ## Artifacts
 
-Real PM deliverables — templates, frameworks, and documentation from actual product work.
+Real PM deliverables - templates, frameworks, and documentation from actual product work.
 
 - 📋 [PRD: IDP Automation](artifacts/prd-idp-automation.md)
 - 📝 [User Stories: Clinical AI Assistant](artifacts/user-stories-clinical-ai.md)
@@ -68,7 +68,7 @@ End-to-end product ownership for AI-enabled clinical platforms. Led 0→1 AI pro
 **Business Analyst | Scrum Master · State Farm** *(Feb 2017 – Apr 2022)*  
 Led Agile transformation for 52-person insurance organization. Delivered $1M+ in SQL-driven cost savings and reduced ticket resolution time by 35%.
 
-**Education:** M.S. Industrial Engineering — Louisiana State University | B.S. Civil Engineering — University of Ibadan
+**Education:** M.S. Industrial Engineering - Louisiana State University | B.S. Civil Engineering - University of Ibadan
 
 ---
 
