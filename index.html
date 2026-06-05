@@ -1161,7 +1161,7 @@ footer {
 <section class="contact-section" id="contact">
   <div class="container">
     <h2 class="contact-title">Let's build something<br><em>that matters.</em></h2>
-    <p class="contact-sub">Open to Senior PM roles in Health IT, clinical AI, insurtech, and regulated fintech — remote or hybrid.</p>
+    <p class="contact-sub">Open to PO, PM, Technical PM and Senior PM roles in Health IT, clinical AI, insurtech, and regulated fintech - remote or hybrid.</p>
     <div class="contact-links">
       <a href="mailto:oluadun10@gmail.com" class="contact-link accent">✉ oluadun10@gmail.com</a>
       <a href="https://linkedin.com/in/oluadun" target="_blank" class="contact-link light">LinkedIn ↗</a>
@@ -1171,14 +1171,16 @@ footer {
 </section>
 
 <footer>
-  <span>© 2026 Olu Adun</span>
-  <span>Senior Product Manager · CSM · CSPO · LSSGB</span>
+  <span>© <span id="year"></span> Olu Adun</span>
+  <span>AI PM | PO · CSM · CSPO · LSSGB</span>
 </footer>
 
 <script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(el => {
+    entries.forEach(el => {
     if (el.isIntersecting) {
       el.target.classList.add('visible');
     }
