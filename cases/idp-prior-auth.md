@@ -1,4 +1,3 @@
---<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -121,7 +120,7 @@ body::before {
   letter-spacing: 0.08em;
 }
 
-.Mockup-dot {
+.LIVE-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
