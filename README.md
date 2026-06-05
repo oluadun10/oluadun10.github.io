@@ -3,7 +3,7 @@
 Senior PM portfolio — Health IT, Clinical AI &amp; Insurtech
 # Hi, I'm Olu Adun 👋
 
-**Senior Product Manager · Health IT & Clinical AI · Insurtech · Regulated Enterprise Platforms**  
+**AI Product Manager · Health IT & Clinical AI · Insurtech · Regulated Enterprise Platforms**  
 *CSM · CSPO · LSSGB*
 
 ---
@@ -16,7 +16,7 @@ Over 9 years, I've shipped products that clinicians actually use, payers actuall
 
 | Impact Area | Result |
 |---|---|
-| 🤖 IDP Prior Auth Automation | $1.3M+ annual savings · 28% processing time reduction |
+| 🤖 IDP Prior Auth Automation | $3M+ annual savings · 28% processing time reduction |
 | 🩺 Clinical AI Assistant (0→1) | 30% paperwork reduction · 17–20% adoption gain |
 | 📈 Product Roadmap Execution | ~25% ARR growth across clinical platforms |
 | ⚡ Enterprise Agile Transformation | 28% faster time-to-market · $1M+ savings identified |
@@ -40,7 +40,7 @@ Delivery               Scrum · SAFe · Kanban · OKRs · CI/CD · Lean Six Sigm
 
 | Project | Type | Outcome |
 |---|---|---|
-| [IDP Prior Authorization Automation](cases/idp-prior-auth.md) | Clinical AI · Healthcare | $1.3M+ savings · 28% faster processing |
+| [IDP Prior Authorization Automation](cases/idp-prior-auth.md) | Clinical AI · Healthcare | $3M+ savings · 28% faster processing |
 | [Clinical AI Assistant — 0→1](cases/clinical-ai-assistant.md) | Product Launch · AI | 30% paperwork reduction |
 | [FHIR EHR Integration MVP](cases/fhir-ehr-integration.md) | Interoperability · Health IT | Regional care gaps closed · HIPAA-2 compliant |
 | [Enterprise Agile Transformation](cases/agile-transformation.md) | Delivery · Insurance | 28% faster TTM · $1M+ identified |
