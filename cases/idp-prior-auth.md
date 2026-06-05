@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+--<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -121,7 +121,7 @@ body::before {
   letter-spacing: 0.08em;
 }
 
-.live-dot {
+.Mockup-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -764,7 +764,7 @@ body::before {
       <div class="kpi-row">
         <div class="kpi green">
           <div class="kpi-label">Cumulative Savings</div>
-          <div class="kpi-value" id="kpi-savings">$3.0M</div>
+          <div class="kpi-value" id="kpi-savings">$3M</div>
           <div class="kpi-delta delta-up">↑ +$240K vs prior period</div>
         </div>
         <div class="kpi blue">
