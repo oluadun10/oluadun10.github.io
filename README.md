@@ -62,10 +62,10 @@ Real PM deliverables — templates, frameworks, and documentation from actual pr
 
 ## Background
 
-**Senior PM · Ochsner Health** *(May 2022 – Present)*  
+**Product Manager | Product Owner · Ochsner Health** *(May 2022 – Present)*  
 End-to-end product ownership for AI-enabled clinical platforms. Led 0→1 AI product development, FHIR API strategy, and autonomous fraud detection deployment across a major regional health system.
 
-**Business Analyst & Scrum Master · State Farm** *(Feb 2017 – Apr 2022)*  
+**Business Analyst | Scrum Master · State Farm** *(Feb 2017 – Apr 2022)*  
 Led Agile transformation for 52-person insurance organization. Delivered $1M+ in SQL-driven cost savings and reduced ticket resolution time by 35%.
 
 **Education:** M.S. Industrial Engineering — Louisiana State University | B.S. Civil Engineering — University of Ibadan
