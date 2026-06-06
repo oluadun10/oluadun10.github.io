@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Prior Auth IDP Dashboard — Ochsner Health</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0F1A;
+  --surface: #111827;
+  --surface2: #1A2235;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #F0F4FF;
+  --muted: #6B7FA3;
+  --accent: #3B8BEB;
+  --accent2: #00D4AA;
+  --warn: #F5A623;
+  --danger: #E8445A;
+  --success: #00D4AA;
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+/* ── GRID BACKGROUND ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,139,235,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,139,235,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HEADER ── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,15,26,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+
+.logo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent2);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.breadcrumb {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.breadcrumb span { color: var(--text); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.toggle-wrap {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  padding: 0.35rem 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.04em;
+}
+
+.toggle-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent2);
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(0,212,170,0.25);
+  border-radius: 4px;
+  background: rgba(0,212,170,0.06);
+}
+
+.live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent2);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ── PAGE TITLE ── */
+.page-title {
+  margin-bottom: 2rem;
+}
+
+.page-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.page-heading {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.page-heading em {
+  font-style: italic;
+  color: var(--accent2);
+}
+
+/* ── KPI ROW ── */
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.kpi:hover { border-color: var(--border2); }
+
+.kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.kpi.green::before { background: var(--success); }
+.kpi.blue::before { background: var(--accent); }
+.kpi.warn::before { background: var(--warn); }
+.kpi.danger::before { background: var(--danger); }
+.kpi.purple::before { background: #9B7FE8; }
+
+.kpi-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.kpi-value {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.kpi.green .kpi-value { color: var(--success); }
+.kpi.blue .kpi-value { color: var(--accent); }
+.kpi.warn .kpi-value { color: var(--warn); }
+.kpi.danger .kpi-value { color: var(--danger); }
+.kpi.purple .kpi-value { color: #9B7FE8; }
+
+.kpi-delta {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.delta-up { color: var(--success); }
+.delta-down { color: var(--danger); }
+.delta-neutral { color: var(--muted); }
+
+/* ── GRID ── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.grid-3-2 {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-title-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.card-body { padding: 1.2rem; }
+
+/* ── QUEUE TABLE ── */
+.queue-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.queue-table th {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 0.8rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.queue-table td {
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle;
+}
+
+.queue-table tr:last-child td { border-bottom: none; }
+
+.queue-table tr {
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.queue-table tr:hover td { background: rgba(59,139,235,0.04); }
+
+.auth-id {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+}
+
+.patient-name {
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.auth-type {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ── STATUS BADGES ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-auto { background: rgba(0,212,170,0.1); color: var(--success); border: 1px solid rgba(0,212,170,0.2); }
+.badge-review { background: rgba(245,166,35,0.1); color: var(--warn); border: 1px solid rgba(245,166,35,0.2); }
+.badge-approved { background: rgba(0,212,170,0.1); color: var(--success); border: 1px solid rgba(0,212,170,0.2); }
+.badge-denied { background: rgba(232,68,90,0.1); color: var(--danger); border: 1px solid rgba(232,68,90,0.2); }
+.badge-pending { background: rgba(59,139,235,0.1); color: var(--accent); border: 1px solid rgba(59,139,235,0.2); }
+.badge-p2p { background: rgba(155,127,232,0.1); color: #9B7FE8; border: 1px solid rgba(155,127,232,0.2); }
+
+/* ── CONFIDENCE BAR ── */
+.conf-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.conf-bar-bg {
+  flex: 1;
+  height: 4px;
+  background: var(--surface2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.conf-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+.conf-val {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  width: 32px;
+  text-align: right;
+}
+
+/* ── PROCESSING TIME ── */
+.time-val {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+/* ── CHART BARS ── */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  height: 120px;
+  padding: 0 0.2rem;
+}
+
+.bar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.bar-pair {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  transition: height 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-height: 2px;
+}
+
+.bar.before { background: rgba(232,68,90,0.4); }
+.bar.after { background: var(--accent2); }
+
+.bar-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ── DONUT CHART ── */
+.donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.donut-svg { flex-shrink: 0; }
+
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legend-pct {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-left: auto;
+  padding-left: 1rem;
+}
+
+/* ── TIMELINE ── */
+.timeline {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+}
+
+.timeline-item:last-child { padding-bottom: 0; }
+
+.timeline-dot {
+  position: absolute;
+  left: -1.1rem;
+  top: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--bg);
+}
+
+.tl-time {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin-bottom: 0.15rem;
+}
+
+.tl-event {
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-bottom: 0.1rem;
+}
+
+.tl-detail {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ── VIEW TOGGLE SECTIONS ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── SAVINGS COUNTER ── */
+.savings-display {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.savings-num {
+  font-family: var(--serif);
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: var(--success);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.03em;
+}
+
+.savings-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.savings-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+/* ── PROCESSING COMPARISON ── */
+.compare-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-row:last-child { border-bottom: none; }
+
+.compare-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.compare-bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.compare-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.compare-bar-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  width: 40px;
+}
+
+.compare-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.compare-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.compare-value {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  width: 45px;
+  text-align: right;
+}
+
+/* ── BACK LINK ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover { color: var(--accent); }
+
+/* ── PROTOTYPE BANNER ── */
+.proto-banner {
+  background: rgba(59,139,235,0.06);
+  border: 1px solid rgba(59,139,235,0.15);
+  border-radius: 8px;
+  padding: 0.75rem 1.2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.proto-text {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.proto-text strong { color: var(--accent); }
+
+.proto-link {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.proto-link:hover { opacity: 0.7; }
+
+@media (max-width: 900px) {
+  .kpi-row { grid-template-columns: repeat(3, 1fr); }
+  .grid-2, .grid-3-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      OCHSNER · UTILIZATION MGMT
+    </div>
+    <div class="breadcrumb">
+      Operations / <span>Prior Authorization</span> / IDP Dashboard
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="toggle-wrap">
+      <button class="toggle-btn active" onclick="setView('live')">Live Queue</button>
+      <button class="toggle-btn" onclick="setView('impact')">Impact Analysis</button>
+    </div>
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      LIVE · <span id="live-time">--:--</span>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+
+  <a href="../cases/idp-prior-auth.md" class="back-link">← Back to Case Study</a>
+
+  <div class="proto-banner">
+    <div class="proto-text"><strong>PROTOTYPE</strong> — Interactive mockup built to illustrate the IDP Prior Authorization dashboard. Data is representative, not live.</div>
+    <a href="../cases/idp-prior-auth.md" class="proto-link">Read the case study →</a>
+  </div>
+
+  <div class="page-title">
+    <div class="page-label">Prior Authorization · IDP Automation</div>
+    <h1 class="page-heading">Authorization <em>Intelligence</em> Dashboard</h1>
+  </div>
+
+  <!-- KPI ROW -->
+  <div class="kpi-row">
+    <div class="kpi green">
+      <div class="kpi-label">Cumulative Savings</div>
+      <div class="kpi-value" id="savings-kpi">$3.0M</div>
+      <div class="kpi-delta delta-up">↑ $847K this quarter</div>
+    </div>
+    <div class="kpi blue">
+      <div class="kpi-label">Avg Processing Time</div>
+      <div class="kpi-value">47<span style="font-size:1.1rem">min</span></div>
+      <div class="kpi-delta delta-up">↓ 28% vs. baseline</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Auto-Processed Today</div>
+      <div class="kpi-value" id="auto-count">84<span style="font-size:1.1rem">%</span></div>
+      <div class="kpi-delta delta-up">↑ 12pts vs. launch</div>
+    </div>
+    <div class="kpi warn">
+      <div class="kpi-label">In Human Review</div>
+      <div class="kpi-value" id="review-count">23</div>
+      <div class="kpi-delta delta-neutral">16% of queue</div>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-label">SLA Compliance</div>
+      <div class="kpi-value">98<span style="font-size:1.1rem">%</span></div>
+      <div class="kpi-delta delta-up">↑ from 71% baseline</div>
+    </div>
+  </div>
+
+  <!-- LIVE QUEUE VIEW -->
+  <div id="view-live" class="view active">
+    <div class="grid-3-2">
+
+      <!-- QUEUE TABLE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-title-dot" style="background:var(--accent)"></div>
+            Authorization Queue
+          </div>
+          <div style="font-family:var(--mono);font-size:0.68rem;color:var(--muted)" id="queue-updated">Updated just now</div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="queue-table">
+            <thead>
+              <tr>
+                <th>Auth ID</th>
+                <th>Patient</th>
+                <th>Type</th>
+                <th>IDP Route</th>
+                <th>Confidence</th>
+                <th>Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="queue-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div style="display:flex;flex-direction:column;gap:1rem">
+
+        <!-- THROUGHPUT CHART -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-dot" style="background:var(--success)"></div>
+              Daily Throughput
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem">
+              <div style="display:flex;align-items:center;gap:0.3rem;font-family:var(--mono);font-size:0.62rem;color:var(--danger)">
+                <div style="width:8px;height:8px;background:rgba(232,68,90,0.4);border-radius:2px"></div>Before
+              </div>
+              <div style="display:flex;align-items:center;gap:0.3rem;font-family:var(--mono);font-size:0.62rem;color:var(--success)">
+                <div style="width:8px;height:8px;background:var(--success);border-radius:2px"></div>After IDP
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="bar-chart" id="throughput-chart"></div>
+          </div>
+        </div>
+
+        <!-- ROUTING DONUT -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-dot" style="background:var(--warn)"></div>
+              Routing Breakdown
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="donut-wrap">
+              <svg class="donut-svg" width="100" height="100" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="38" fill="none" stroke="var(--surface2)" stroke-width="12"/>
+                <!-- Auto: 84% = 238.76 -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="var(--success)" stroke-width="12"
+                  stroke-dasharray="238.76 44.56" stroke-dashoffset="0" transform="rotate(-90 50 50)"
+                  style="transition:stroke-dasharray 1.5s ease"/>
+                <!-- Review: 16% = 44.56 -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="var(--warn)" stroke-width="12"
+                  stroke-dasharray="44.56 238.76" stroke-dashoffset="-238.76" transform="rotate(-90 50 50)"
+                  style="transition:stroke-dasharray 1.5s ease"/>
+                <text x="50" y="46" text-anchor="middle" fill="var(--text)" font-family="Fraunces,serif" font-size="14" font-weight="600">84%</text>
+                <text x="50" y="58" text-anchor="middle" fill="var(--muted)" font-family="IBM Plex Mono,monospace" font-size="6">AUTO</text>
+              </svg>
+              <div class="donut-legend">
+                <div class="legend-item">
+                  <div class="legend-dot" style="background:var(--success)"></div>
+                  <span>Auto-processed</span>
+                  <span class="legend-pct">84%</span>
+                </div>
+                <div class="legend-item">
+                  <div class="legend-dot" style="background:var(--warn)"></div>
+                  <span>Human review</span>
+                  <span class="legend-pct">16%</span>
+                </div>
+                <div class="legend-item" style="margin-top:0.3rem;padding-top:0.3rem;border-top:1px solid var(--border)">
+                  <div class="legend-dot" style="background:var(--muted)"></div>
+                  <span style="color:var(--muted);font-size:0.75rem">At launch: 72% manual</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="grid-2">
+
+      <!-- RECENT ACTIVITY -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-title-dot" style="background:var(--accent2)"></div>
+            Recent Activity
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--success)"></div>
+              <div class="tl-time">2 min ago</div>
+              <div class="tl-event">Auto-approval: PA-2847</div>
+              <div class="tl-detail">MRI — Lumbar Spine · Confidence 97% · Processed in 3.2 min</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--warn)"></div>
+              <div class="tl-time">8 min ago</div>
+              <div class="tl-event">Routed to review: PA-2846</div>
+              <div class="tl-detail">Specialty Drug — Humira · Confidence 61% · Assigned to Dr. Chen</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--success)"></div>
+              <div class="tl-time">14 min ago</div>
+              <div class="tl-event">Auto-approval: PA-2845</div>
+              <div class="tl-detail">PT — Knee Rehabilitation · Confidence 94% · Processed in 2.8 min</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--accent)"></div>
+              <div class="tl-time">22 min ago</div>
+              <div class="tl-event">Peer-to-peer requested: PA-2841</div>
+              <div class="tl-detail">Spinal Fusion Surgery · Denied → P2P initiated by Dr. Williams</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--success)"></div>
+              <div class="tl-time">31 min ago</div>
+              <div class="tl-event">Auto-approval: PA-2839</div>
+              <div class="tl-detail">Cardiac Cath — Diagnostic · Confidence 99% · Processed in 1.9 min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TYPE BREAKDOWN -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-title-dot" style="background:var(--accent)"></div>
+            Processing Time by Auth Type
+          </div>
+          <div style="font-family:var(--mono);font-size:0.62rem;color:var(--muted)">Before → After IDP</div>
+        </div>
+        <div class="card-body">
+          <div id="compare-rows"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- IMPACT ANALYSIS VIEW -->
+  <div id="view-impact" class="view">
+    <div class="grid-2">
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-title-dot" style="background:var(--success)"></div>
+            Cumulative Cost Savings
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="savings-display">
+            <div class="savings-num" id="savings-counter">$0</div>
+            <div class="savings-label">Total Savings Delivered</div>
+            <div class="savings-sub">Based on manual hours eliminated × fully-loaded cost per clinical FTE.<br>Validated quarterly against operations dashboard.</div>
+          </div>
+          <div style="margin-top:1rem">
+            <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:0.68rem;color:var(--muted);margin-bottom:0.5rem">
+              <span>Q3 2022 (Launch)</span><span>Q2 2026 (Current)</span>
+            </div>
+            <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden">
+              <div id="savings-progress" style="height:100%;background:linear-gradient(90deg,var(--accent),var(--success));border-radius:3px;width:0%;transition:width 2s ease"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-title-dot" style="background:var(--accent)"></div>
+            Key Impact Metrics
+          </div>
+        </div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:1rem">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem">
+                <span style="font-size:0.82rem">Processing time reduction</span>
+                <span style="font-family:var(--mono);font-size:0.78rem;color:var(--success)">28%</span>
+              </div>
+              <div style="height:5px;background:var(--surface2);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:28%;background:var(--success);border-radius:3px;transition:width 1.5s ease"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem">
+                <span style="font-size:0.82rem">Auto-processing rate</span>
+                <span style="font-family:var(--mono);font-size:0.78rem;color:var(--accent)">84%</span>
+              </div>
+              <div style="height:5px;background:var(--surface2);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:84%;background:var(--accent);border-radius:3px;transition:width 1.5s ease"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem">
+                <span style="font-size:0.82rem">SLA compliance</span>
+                <span style="font-family:var(--mono);font-size:0.78rem;color:var(--success)">98%</span>
+              </div>
+              <div style="height:5px;background:var(--surface2);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:98%;background:var(--success);border-radius:3px;transition:width 1.5s ease"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem">
+                <span style="font-size:0.82rem">Manual review eliminated</span>
+                <span style="font-family:var(--mono);font-size:0.78rem;color:var(--warn)">72%</span>
+              </div>
+              <div style="height:5px;background:var(--surface2);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:72%;background:var(--warn);border-radius:3px;transition:width 1.5s ease"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem">
+                <span style="font-size:0.82rem">Sprint completion rate</span>
+                <span style="font-family:var(--mono);font-size:0.78rem;color:var(--success)">96%</span>
+              </div>
+              <div style="height:5px;background:var(--surface2);border-radius:3px;overflow:hidden">
+                <div style="height:100%;width:96%;background:var(--success);border-radius:3px;transition:width 1.5s ease"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-title-dot" style="background:var(--warn)"></div>
+            Before vs. After — Processing Time
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="impact-compare"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="card-title-dot" style="background:var(--accent2)"></div>
+            Product Delivery Milestones
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--success)"></div>
+              <div class="tl-time">Q3 2022</div>
+              <div class="tl-event">Discovery & Business Case</div>
+              <div class="tl-detail">12 stakeholder workshops · BPMN mapping · ROI model approved</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--success)"></div>
+              <div class="tl-time">Q4 2022</div>
+              <div class="tl-event">Requirements & Architecture</div>
+              <div class="tl-detail">40+ user stories · API contracts defined · Compliance review complete</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--success)"></div>
+              <div class="tl-time">Q1 2023</div>
+              <div class="tl-event">Beta Launch</div>
+              <div class="tl-detail">3 document types · Pilot team · 96% sprint completion rate</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--success)"></div>
+              <div class="tl-time">Q2 2023</div>
+              <div class="tl-event">Full Rollout</div>
+              <div class="tl-detail">All auth types · $1M savings milestone · 28% processing reduction confirmed</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot" style="background:var(--accent)"></div>
+              <div class="tl-time">Q2 2026</div>
+              <div class="tl-event">$3M+ Savings Milestone</div>
+              <div class="tl-detail">Cumulative savings validated · 84% auto-processing · HIPAA-2 compliant</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── LIVE CLOCK ──
+function updateClock() {
+  const now = new Date();
+  document.getElementById('live-time').textContent =
+    now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// ── VIEW TOGGLE ──
+function setView(v) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.toggle-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  event.target.classList.add('active');
+  if (v === 'impact') animateSavings();
+}
+
+// ── QUEUE DATA ──
+const queueData = [
+  { id: 'PA-2849', patient: 'Johnson, M.', type: 'MRI — Brain', route: 'auto', conf: 96, time: '2 min', status: 'approved' },
+  { id: 'PA-2848', patient: 'Thompson, R.', type: 'Specialty Drug', route: 'review', conf: 58, time: '18 min', status: 'review' },
+  { id: 'PA-2847', patient: 'Williams, S.', type: 'MRI — Lumbar', route: 'auto', conf: 97, time: '3 min', status: 'approved' },
+  { id: 'PA-2846', patient: 'Davis, K.', type: 'Specialty Drug', route: 'review', conf: 61, time: '31 min', status: 'review' },
+  { id: 'PA-2845', patient: 'Miller, A.', type: 'PT — Knee Rehab', route: 'auto', conf: 94, time: '3 min', status: 'approved' },
+  { id: 'PA-2844', patient: 'Brown, C.', type: 'Cardiac Cath', route: 'auto', conf: 91, time: '4 min', status: 'approved' },
+  { id: 'PA-2843', patient: 'Garcia, L.', type: 'Spinal Surgery', route: 'review', conf: 44, time: '—', status: 'pending' },
+  { id: 'PA-2842', patient: 'Martinez, J.', type: 'CT — Chest', route: 'auto', conf: 89, time: '5 min', status: 'approved' },
+  { id: 'PA-2841', patient: 'Wilson, B.', type: 'Spinal Fusion', route: 'review', conf: 38, time: '—', status: 'p2p' },
+  { id: 'PA-2840', patient: 'Lee, H.', type: 'Sleep Study', route: 'auto', conf: 93, time: '4 min', status: 'approved' },
+];
+
+function confColor(c) {
+  if (c >= 85) return 'var(--success)';
+  if (c >= 65) return 'var(--warn)';
+  return 'var(--danger)';
+}
+
+function renderQueue() {
+  const tbody = document.getElementById('queue-body');
+  tbody.innerHTML = queueData.map(r => `
+    <tr>
+      <td><div class="auth-id">${r.id}</div></td>
+      <td><div class="patient-name">${r.patient}</div></td>
+      <td><div class="auth-type">${r.type}</div></td>
+      <td><span class="badge ${r.route === 'auto' ? 'badge-auto' : 'badge-review'}">${r.route === 'auto' ? '⚡ AUTO' : '👤 REVIEW'}</span></td>
+      <td>
+        <div class="conf-wrap">
+          <div class="conf-bar-bg">
+            <div class="conf-bar-fill" style="width:${r.conf}%;background:${confColor(r.conf)}"></div>
+          </div>
+          <div class="conf-val" style="color:${confColor(r.conf)}">${r.conf}%</div>
+        </div>
+      </td>
+      <td><div class="time-val" style="color:${r.time === '—' ? 'var(--muted)' : 'var(--text)'}">${r.time}</div></td>
+      <td><span class="badge badge-${r.status}">${r.status.toUpperCase()}</span></td>
+    </tr>
+  `).join('');
+}
+
+// ── THROUGHPUT CHART ──
+const throughputData = [
+  { label: 'Mon', before: 45, after: 78 },
+  { label: 'Tue', before: 52, after: 91 },
+  { label: 'Wed', before: 38, after: 85 },
+  { label: 'Thu', before: 61, after: 103 },
+  { label: 'Fri', before: 55, after: 97 },
+  { label: 'Sat', before: 29, after: 54 },
+  { label: 'Sun', before: 18, after: 41 },
+];
+
+function renderChart() {
+  const max = Math.max(...throughputData.map(d => d.after));
+  const chart = document.getElementById('throughput-chart');
+  chart.innerHTML = throughputData.map(d => `
+    <div class="bar-group">
+      <div class="bar-pair">
+        <div class="bar before" style="height:${(d.before/max)*90}px" title="Before: ${d.before}"></div>
+        <div class="bar after" style="height:${(d.after/max)*90}px" title="After: ${d.after}"></div>
+      </div>
+      <div class="bar-label">${d.label}</div>
+    </div>
+  `).join('');
+}
+
+// ── COMPARE ROWS ──
+const compareData = [
+  { label: 'Radiology', before: 320, after: 8, unit: 'min' },
+  { label: 'Med/Surg', before: 480, after: 12, unit: 'min' },
+  { label: 'Spec. Drugs', before: 960, after: 45, unit: 'min' },
+  { label: 'Behavioral', before: 240, after: 6, unit: 'min' },
+  { label: 'Surgical', before: 720, after: 95, unit: 'min' },
+];
+
+function renderCompare(containerId) {
+  const max = Math.max(...compareData.map(d => d.before));
+  document.getElementById(containerId).innerHTML = compareData.map(d => `
+    <div class="compare-row">
+      <div class="compare-label">${d.label}</div>
+      <div class="compare-bars">
+        <div class="compare-bar-row">
+          <div class="compare-bar-label" style="color:var(--danger)">Before</div>
+          <div class="compare-bar-track">
+            <div class="compare-bar-fill" style="width:${(d.before/max)*100}%;background:rgba(232,68,90,0.5)"></div>
+          </div>
+          <div class="compare-value" style="color:var(--danger)">${d.before < 60 ? d.before + 'm' : Math.round(d.before/60*10)/10 + 'h'}</div>
+        </div>
+        <div class="compare-bar-row">
+          <div class="compare-bar-label" style="color:var(--success)">After</div>
+          <div class="compare-bar-track">
+            <div class="compare-bar-fill" style="width:${(d.after/max)*100}%;background:var(--success)"></div>
+          </div>
+          <div class="compare-value" style="color:var(--success)">${d.after}m</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── SAVINGS ANIMATION ──
+function animateSavings() {
+  const target = 3047000;
+  const duration = 2000;
+  const start = Date.now();
+  const progress = document.getElementById('savings-progress');
+  if (progress) progress.style.width = '100%';
+
+  function tick() {
+    const elapsed = Date.now() - start;
+    const pct = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - pct, 3);
+    const val = Math.round(target * ease);
+    const el = document.getElementById('savings-counter');
+    if (el) el.textContent = '$' + (val >= 1000000
+      ? (val/1000000).toFixed(2) + 'M'
+      : (val/1000).toFixed(0) + 'K');
+    if (pct < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+// ── LIVE QUEUE REFRESH SIMULATION ──
+let refreshCount = 0;
+setInterval(() => {
+  refreshCount++;
+  const el = document.getElementById('queue-updated');
+  if (el) el.textContent = `Updated ${refreshCount * 30}s ago`;
+}, 30000);
+
+// ── INIT ──
+renderQueue();
+renderChart();
+renderCompare('compare-rows');
+renderCompare('impact-compare');
+</script>
+</body>
+</html>
