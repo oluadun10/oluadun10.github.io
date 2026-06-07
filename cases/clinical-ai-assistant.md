@@ -1,4 +1,5 @@
 [clinical-ai-assistant.md](https://github.com/user-attachments/files/28626862/clinical-ai-assistant.md)
+**Live Prototype:** [View Dashboard →](../prototypes/clinical-ai-assistant.html)
 # Case Study: Clinical AI Assistant — 0→1 Product Launch
 
 **Company:** Ochsner Health  
