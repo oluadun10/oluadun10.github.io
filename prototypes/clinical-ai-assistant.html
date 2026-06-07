@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Clinical AI Assistant — Ochsner Health</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F6F2;
+  --surface: #FFFFFF;
+  --surface2: #F0EEE9;
+  --border: #E5E2DB;
+  --border2: #D4D0C8;
+  --ink: #1C1917;
+  --ink-soft: #44403C;
+  --ink-muted: #78716C;
+  --accent: #0E7490;
+  --accent-light: #E0F2FE;
+  --accent2: #059669;
+  --accent2-light: #D1FAE5;
+  --warn: #D97706;
+  --warn-light: #FEF3C7;
+  --ai-purple: #7C3AED;
+  --ai-light: #EDE9FE;
+  --serif: 'Lora', Georgia, serif;
+  --sans: 'Plus Jakarta Sans', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); font-size: 14px; min-height: 100vh; overflow-x: hidden; }
+
+/* ── SIDEBAR ── */
+.layout { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+
+.sidebar {
+  background: var(--ink);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 220px;
+  z-index: 50;
+}
+
+.sidebar-logo {
+  padding: 1.2rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo-mark {
+  width: 30px; height: 30px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.logo-text { font-size: 0.82rem; font-weight: 600; line-height: 1.2; }
+.logo-sub { font-size: 0.65rem; color: rgba(255,255,255,0.4); font-family: var(--mono); }
+
+.sidebar-section {
+  padding: 1rem 1rem 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  border-radius: 0;
+  transition: all 0.15s;
+  margin: 0 0.5rem;
+  border-radius: 6px;
+}
+
+.sidebar-item:hover { background: rgba(255,255,255,0.06); color: white; }
+.sidebar-item.active { background: var(--accent); color: white; }
+.sidebar-item-icon { font-size: 15px; width: 18px; text-align: center; }
+
+.sidebar-patient {
+  margin: auto 0 0;
+  padding: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.patient-card-mini {
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.patient-name-mini { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.15rem; }
+.patient-meta-mini { font-family: var(--mono); font-size: 0.62rem; color: rgba(255,255,255,0.4); }
+
+/* ── MAIN ── */
+.main { margin-left: 220px; display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.5rem;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.topbar-left { display: flex; align-items: center; gap: 1rem; }
+
+.encounter-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid rgba(14,116,144,0.2);
+}
+
+.rec-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #EF4444;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.topbar-right { display: flex; align-items: center; gap: 0.75rem; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink-soft);
+  transition: all 0.15s;
+}
+
+.btn:hover { border-color: var(--border2); background: var(--surface2); }
+.btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+.btn.primary:hover { background: #0C6478; }
+.btn.success { background: var(--accent2); color: white; border-color: var(--accent2); }
+.btn.ai { background: var(--ai-purple); color: white; border-color: var(--ai-purple); }
+.btn.ai:hover { background: #6D28D9; }
+
+/* ── CONTENT AREA ── */
+.content { display: grid; grid-template-columns: 1fr 380px; flex: 1; gap: 0; }
+
+/* ── NOTE EDITOR ── */
+.editor-panel {
+  padding: 1.5rem;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ai-banner {
+  background: var(--ai-light);
+  border: 1px solid rgba(124,58,237,0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ai-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  color: var(--ai-purple);
+  font-weight: 500;
+}
+
+.ai-tag {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  padding: 0.15rem 0.45rem;
+  background: rgba(124,58,237,0.12);
+  color: var(--ai-purple);
+  border-radius: 3px;
+  border: 1px solid rgba(124,58,237,0.2);
+}
+
+.note-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.note-card-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface2);
+}
+
+.note-section-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.conf-chip {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 3px;
+}
+
+.conf-high { background: var(--accent2-light); color: var(--accent2); }
+.conf-med { background: var(--warn-light); color: var(--warn); }
+.conf-low { background: #FEE2E2; color: #DC2626; }
+
+.note-content {
+  padding: 1rem;
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  min-height: 80px;
+  position: relative;
+}
+
+.highlight-warn {
+  background: var(--warn-light);
+  border-bottom: 1px dashed var(--warn);
+  cursor: help;
+  position: relative;
+}
+
+.note-actions {
+  padding: 0.6rem 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 0.5rem;
+  background: var(--surface2);
+}
+
+/* ── RIGHT PANEL ── */
+.right-panel { display: flex; flex-direction: column; overflow: hidden; }
+
+/* ── PATIENT INFO ── */
+.patient-panel {
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.patient-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+
+.patient-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.patient-name { font-weight: 600; font-size: 1rem; }
+.patient-dob { font-size: 0.75rem; color: var(--ink-muted); font-family: var(--mono); }
+
+.patient-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.patient-field { }
+.field-label { font-family: var(--mono); font-size: 0.6rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.15rem; }
+.field-value { font-size: 0.82rem; font-weight: 500; }
+
+/* ── AI SUGGESTIONS ── */
+.ai-panel {
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  flex: 1;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  display: flex;
+  gap: 0.65rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.suggestion-item:last-child { border-bottom: none; }
+
+.suggestion-icon {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.si-blue { background: var(--accent-light); }
+.si-green { background: var(--accent2-light); }
+.si-warn { background: var(--warn-light); }
+.si-purple { background: var(--ai-light); }
+
+.suggestion-text { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; }
+.suggestion-text strong { color: var(--ink); font-weight: 600; }
+.suggestion-source { font-family: var(--mono); font-size: 0.6rem; color: var(--ink-muted); margin-top: 0.2rem; }
+
+/* ── METRICS STRIP ── */
+.metrics-strip {
+  padding: 1rem 1.25rem;
+  background: var(--surface2);
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 0.5rem;
+}
+
+.metric-mini { text-align: center; }
+.metric-mini-num { font-family: var(--mono); font-size: 1rem; font-weight: 500; color: var(--accent); }
+.metric-mini-label { font-size: 0.65rem; color: var(--ink-muted); margin-top: 0.1rem; }
+
+/* ── TABS ── */
+.tab-row {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0 1rem;
+}
+
+.tab {
+  padding: 0.6rem 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ── PROTO BANNER ── */
+.proto-bar {
+  background: var(--ai-light);
+  border-bottom: 1px solid rgba(124,58,237,0.15);
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--ai-purple);
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 14px;
+  background: var(--ai-purple);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: blink 0.8s ease-in-out infinite;
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">🩺</div>
+      <div>
+        <div class="logo-text">ClinAI Assistant</div>
+        <div class="logo-sub">OCHSNER HEALTH · v2.4</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">Workspace</div>
+    <div class="sidebar-item active"><span class="sidebar-item-icon">📝</span> Note Drafting</div>
+    <div class="sidebar-item"><span class="sidebar-item-icon">📋</span> After-Visit Summary</div>
+    <div class="sidebar-item"><span class="sidebar-item-icon">📤</span> Referral Letters</div>
+    <div class="sidebar-item"><span class="sidebar-item-icon">📊</span> My Analytics</div>
+
+    <div class="sidebar-section">Today's Schedule</div>
+    <div class="sidebar-item active"><span class="sidebar-item-icon">🔵</span> Johnson, M. · Now</div>
+    <div class="sidebar-item"><span class="sidebar-item-icon">⚪</span> Patel, R. · 2:30pm</div>
+    <div class="sidebar-item"><span class="sidebar-item-icon">⚪</span> Chen, L. · 3:15pm</div>
+    <div class="sidebar-item"><span class="sidebar-item-icon">⚪</span> Williams, K. · 4:00pm</div>
+
+    <div class="sidebar-patient">
+      <div class="sidebar-section" style="padding:0 0 0.5rem">Current Patient</div>
+      <div class="patient-card-mini">
+        <div class="patient-name-mini">Marcus Johnson</div>
+        <div class="patient-meta-mini">DOB: 03/14/1978 · MRN: 847291</div>
+        <div class="patient-meta-mini" style="margin-top:0.2rem">Office Visit · Follow-up HTN</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+
+    <div class="proto-bar">
+      <span>⚡ PROTOTYPE — Clinical AI Assistant · Interactive Mockup</span>
+      <a href="../cases/clinical-ai-assistant.md" style="color:var(--ai-purple);text-decoration:none">Read case study →</a>
+    </div>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="encounter-badge">
+          <div class="rec-dot"></div>
+          ENCOUNTER ACTIVE · 00:18:43
+        </div>
+        <span style="font-size:0.82rem;color:var(--ink-muted)">Office Visit — Hypertension Follow-up · Dr. Olu Adun, PM</span>
+      </div>
+      <div class="topbar-right">
+        <button class="btn" onclick="regenerate()">↺ Regenerate</button>
+        <button class="btn ai" onclick="generateNote()">✨ Generate Draft</button>
+        <button class="btn success" onclick="signNote()">✓ Sign & Submit</button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- EDITOR PANEL -->
+      <div class="editor-panel">
+
+        <div class="ai-banner">
+          <div class="ai-banner-text">
+            <span>✨</span>
+            AI-generated draft — review and edit before signing
+            <span class="ai-tag">DRAFT</span>
+          </div>
+          <div style="font-family:var(--mono);font-size:0.65rem;color:var(--ai-purple)">Confidence: 91%</div>
+        </div>
+
+        <!-- CHIEF COMPLAINT -->
+        <div class="note-card">
+          <div class="note-card-header">
+            <div class="note-section-title">Chief Complaint <span class="ai-tag" style="font-size:0.6rem">AI</span></div>
+            <span class="conf-chip conf-high">97% confident</span>
+          </div>
+          <div class="note-content" id="cc-content">
+            Patient presents for follow-up of hypertension and medication management. Reports improved compliance with lisinopril 10mg daily over the past 30 days. Denies chest pain, shortness of breath, or headache.
+          </div>
+          <div class="note-actions">
+            <button class="btn" style="font-size:0.75rem;padding:0.3rem 0.7rem">✏️ Edit</button>
+            <button class="btn" style="font-size:0.75rem;padding:0.3rem 0.7rem">✓ Accept</button>
+          </div>
+        </div>
+
+        <!-- ASSESSMENT -->
+        <div class="note-card">
+          <div class="note-card-header">
+            <div class="note-section-title">Assessment & Plan <span class="ai-tag" style="font-size:0.6rem">AI</span></div>
+            <span class="conf-chip conf-med">78% confident</span>
+          </div>
+          <div class="note-content">
+            <strong>1. Hypertension (I10)</strong> — BP today 138/88. <span class="highlight-warn" title="⚠ Low confidence — verify reading">Improved from 152/96 at last visit</span>. Continue lisinopril 10mg daily. Patient counseled on DASH diet and sodium restriction. Follow-up in 6 weeks.<br><br>
+            <strong>2. Hyperlipidemia (E78.5)</strong> — LDL 112 per labs 11/2025. Continue atorvastatin 20mg. <span class="highlight-warn" title="⚠ Consider dose adjustment per latest guidelines">Repeat lipid panel in 6 months</span>.<br><br>
+            <strong>3. Preventive Care</strong> — Due for colonoscopy (age 47, no prior). Referral placed to GI. Flu vaccine administered today.
+          </div>
+          <div class="note-actions">
+            <button class="btn" style="font-size:0.75rem;padding:0.3rem 0.7rem">✏️ Edit</button>
+            <button class="btn" style="font-size:0.75rem;padding:0.3rem 0.7rem">✓ Accept</button>
+          </div>
+        </div>
+
+        <!-- VITALS -->
+        <div class="note-card">
+          <div class="note-card-header">
+            <div class="note-section-title">Vitals <span style="font-family:var(--mono);font-size:0.6rem;padding:0.15rem 0.4rem;background:var(--accent-light);color:var(--accent);border-radius:3px">FROM EHR</span></div>
+            <span class="conf-chip conf-high">Auto-pulled</span>
+          </div>
+          <div class="note-content" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;font-family:var(--mono);font-size:0.8rem">
+            <div><div style="font-size:0.6rem;color:var(--ink-muted);margin-bottom:0.2rem">BP</div><strong>138/88</strong> mmHg</div>
+            <div><div style="font-size:0.6rem;color:var(--ink-muted);margin-bottom:0.2rem">HR</div><strong>72</strong> bpm</div>
+            <div><div style="font-size:0.6rem;color:var(--ink-muted);margin-bottom:0.2rem">Weight</div><strong>184</strong> lbs</div>
+            <div><div style="font-size:0.6rem;color:var(--ink-muted);margin-bottom:0.2rem">Temp</div><strong>98.4</strong>°F</div>
+            <div><div style="font-size:0.6rem;color:var(--ink-muted);margin-bottom:0.2rem">SpO2</div><strong>98%</strong></div>
+            <div><div style="font-size:0.6rem;color:var(--ink-muted);margin-bottom:0.2rem">BMI</div><strong>27.4</strong></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="right-panel">
+
+        <!-- PATIENT INFO -->
+        <div class="patient-panel">
+          <div class="patient-header">
+            <div class="patient-avatar">MJ</div>
+            <div>
+              <div class="patient-name">Marcus Johnson</div>
+              <div class="patient-dob">DOB: 03/14/1978 · 47M · MRN: 847291</div>
+            </div>
+          </div>
+          <div class="patient-grid">
+            <div class="patient-field">
+              <div class="field-label">Primary Dx</div>
+              <div class="field-value">Hypertension</div>
+            </div>
+            <div class="patient-field">
+              <div class="field-label">Last Visit</div>
+              <div class="field-value">Nov 12, 2025</div>
+            </div>
+            <div class="patient-field">
+              <div class="field-label">Allergies</div>
+              <div class="field-value" style="color:#DC2626">Penicillin</div>
+            </div>
+            <div class="patient-field">
+              <div class="field-label">Insurance</div>
+              <div class="field-value">BCBS PPO</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="tab-row">
+          <div class="tab active">AI Insights</div>
+          <div class="tab">Med List</div>
+          <div class="tab">Lab Results</div>
+          <div class="tab">History</div>
+        </div>
+
+        <!-- AI SUGGESTIONS -->
+        <div class="ai-panel">
+          <div class="section-label">✨ AI Clinical Suggestions</div>
+
+          <div class="suggestion-item">
+            <div class="suggestion-icon si-warn">⚠️</div>
+            <div>
+              <div class="suggestion-text"><strong>BP trend:</strong> 3 consecutive visits above 135/85. Consider stepping up to lisinopril 20mg per JNC-8 guidelines.</div>
+              <div class="suggestion-source">Source: Patient history · JNC-8 Protocol</div>
+            </div>
+          </div>
+
+          <div class="suggestion-item">
+            <div class="suggestion-icon si-blue">💊</div>
+            <div>
+              <div class="suggestion-text"><strong>Drug interaction alert:</strong> Atorvastatin + upcoming ibuprofen Rx — monitor for myopathy. Consider acetaminophen as alternative.</div>
+              <div class="suggestion-source">Source: Medication reconciliation · FDA database</div>
+            </div>
+          </div>
+
+          <div class="suggestion-item">
+            <div class="suggestion-icon si-green">✅</div>
+            <div>
+              <div class="suggestion-text"><strong>Preventive gap closed:</strong> Colonoscopy referral placed. Patient is current on all other age-appropriate screenings.</div>
+              <div class="suggestion-source">Source: HEDIS measures · Patient record</div>
+            </div>
+          </div>
+
+          <div class="suggestion-item">
+            <div class="suggestion-icon si-purple">🧠</div>
+            <div>
+              <div class="suggestion-text"><strong>Similar patients:</strong> 73% of HTN patients with this profile responded well to lifestyle modification + ACE inhibitor combination.</div>
+              <div class="suggestion-source">Source: De-identified population data</div>
+            </div>
+          </div>
+
+          <div class="suggestion-item">
+            <div class="suggestion-icon si-blue">📅</div>
+            <div>
+              <div class="suggestion-text"><strong>Follow-up suggestion:</strong> 6-week interval aligns with AHA guidelines for BP adjustment monitoring. Telehealth visit eligible.</div>
+              <div class="suggestion-source">Source: AHA Hypertension Guidelines 2024</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- METRICS STRIP -->
+        <div class="metrics-strip">
+          <div class="metric-mini">
+            <div class="metric-mini-num">3.2<span style="font-size:0.7rem">min</span></div>
+            <div class="metric-mini-label">Draft time saved</div>
+          </div>
+          <div class="metric-mini">
+            <div class="metric-mini-num">91%</div>
+            <div class="metric-mini-label">Note confidence</div>
+          </div>
+          <div class="metric-mini">
+            <div class="metric-mini-num">47</div>
+            <div class="metric-mini-label">Notes this month</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let generating = false;
+
+function generateNote() {
+  if (generating) return;
+  generating = true;
+  const btn = document.querySelector('.btn.ai');
+  btn.textContent = '✨ Generating...';
+  btn.disabled = true;
+
+  const cc = document.getElementById('cc-content');
+  const original = cc.innerHTML;
+  cc.innerHTML = '';
+
+  const text = "Patient presents for follow-up of hypertension and medication management. Reports improved compliance with lisinopril 10mg daily over the past 30 days. Denies chest pain, shortness of breath, or headache.";
+  let i = 0;
+
+  const cursor = document.createElement('span');
+  cursor.className = 'typing-cursor';
+  cc.appendChild(cursor);
+
+  const interval = setInterval(() => {
+    if (i < text.length) {
+      cc.insertBefore(document.createTextNode(text[i]), cursor);
+      i++;
+    } else {
+      clearInterval(interval);
+      cursor.remove();
+      btn.innerHTML = '✨ Generate Draft';
+      btn.disabled = false;
+      generating = false;
+    }
+  }, 18);
+}
+
+function regenerate() {
+  const banner = document.querySelector('.ai-banner');
+  banner.style.opacity = '0.5';
+  setTimeout(() => { banner.style.opacity = '1'; }, 600);
+}
+
+function signNote() {
+  const btn = document.querySelector('.btn.success');
+  btn.textContent = '✓ Signed!';
+  btn.style.background = '#065F46';
+  setTimeout(() => {
+    btn.textContent = '✓ Sign & Submit';
+    btn.style.background = '';
+  }, 2000);
+}
+</script>
+</body>
+</html>
