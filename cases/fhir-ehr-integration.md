@@ -1,4 +1,5 @@
 [fhir-ehr-integration.md](https://github.com/user-attachments/files/28626897/fhir-ehr-integration.md)
+**Live Prototype:** [View Dashboard →](../prototypes/fhir-ehr-integration.html)
 # Case Study: FHIR-Compliant EHR Integration & Integrated Care MVP
 
 **Company:** Ochsner Health  
