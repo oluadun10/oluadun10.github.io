@@ -1,5 +1,5 @@
 [README.md](https://github.com/user-attachments/files/28623922/README.md)
-# oluadun.github.io
+# oluadun10.github.io
 Business Analyst/Product Owner portfolio — Health IT, Clinical AI &amp; Insurtech
 # Hi, I'm Olu Adun 👋
 
@@ -74,8 +74,8 @@ Led Agile transformation for 52-person insurance organization. Delivered $1M+ in
 
 ## Let's connect
 
-📧 oluadun10@gmail.com  
-💼 [linkedin.com/in/oluadun](https://linkedin.com/in/oluadun)  
+📧 [Email](oluadun10@gmail.com)
+💼 [linkedin](https://linkedin.com/in/oluadun)  
 🌐 [Portfolio Site](https://oluadun10.github.io)
 
 *Open to BA, PO, Senior BA, Technical PM and Product Analyst roles in Health IT, clinical AI, insurtech, and regulated fintech — remote or hybrid.*
