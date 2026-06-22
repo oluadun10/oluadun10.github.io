@@ -1,9 +1,9 @@
 [README.md](https://github.com/user-attachments/files/28623922/README.md)
 # oluadun.github.io
-Senior PM portfolio — Health IT, Clinical AI &amp; Insurtech
+Business Analyst/Product Owner portfolio — Health IT, Clinical AI &amp; Insurtech
 # Hi, I'm Olu Adun 👋
 
-**AI Product Manager · Health IT & Clinical AI · Insurtech · Regulated Enterprise Platforms**  
+**AI Business Analyst · Health IT & Clinical AI · Insurtech · Regulated Enterprise Platforms**  
 *CSM · CSPO · LSSGB*
 
 ---
@@ -12,7 +12,7 @@ Senior PM portfolio — Health IT, Clinical AI &amp; Insurtech
 
 I build AI-powered products at the intersection of healthcare, data, and human workflow - where regulatory complexity meets the need for clarity, speed, and measurable impact.
 
-Over 9 years, I've shipped products that clinicians actually use, payers actually trust, and engineers actually want to build.
+Over 7 years, I've shipped products that clinicians actually use, payers actually trust, and engineers actually want to build.
 
 | Impact Area | Result |
 |---|---|
@@ -49,7 +49,7 @@ Delivery               Scrum · SAFe · Kanban · OKRs · CI/CD · Lean Six Sigm
 
 ## Artifacts
 
-Real PM deliverables - templates, frameworks, and documentation from actual product work.
+Real BA/PO deliverables - templates, frameworks, and documentation from actual product work.
 
 - 📋 [PRD: IDP Automation](artifacts/prd-idp-automation.md)
 - 📝 [User Stories: Clinical AI Assistant](artifacts/user-stories-clinical-ai.md)
@@ -62,13 +62,13 @@ Real PM deliverables - templates, frameworks, and documentation from actual prod
 
 ## Background
 
-**Product Manager | Product Owner · Ochsner Health** *(May 2022 – Present)*  
+**Business Analyst | Product Owner · Ochsner Health** *(May 2022 – Present)*  
 End-to-end product ownership for AI-enabled clinical platforms. Led 0→1 AI product development, FHIR API strategy, and autonomous fraud detection deployment across a major regional health system.
 
 **Business Analyst | Scrum Master · State Farm** *(Feb 2017 – Apr 2022)*  
 Led Agile transformation for 52-person insurance organization. Delivered $1M+ in SQL-driven cost savings and reduced ticket resolution time by 35%.
 
-**Education:** M.S. Industrial Engineering - Louisiana State University | B.S. Civil Engineering - University of Ibadan
+**Education:** M.S. Industrial & Systems Engineering (Minor: Information Systems & Decision Science (ISDS) - Louisiana State University | B.S. Civil Engineering - University of Ibadan
 
 ---
 
@@ -76,6 +76,6 @@ Led Agile transformation for 52-person insurance organization. Delivered $1M+ in
 
 📧 oluadun10@gmail.com  
 💼 [linkedin.com/in/oluadun](https://linkedin.com/in/oluadun)  
-🌐 [Portfolio Site](https://oluadun.github.io)
+🌐 [Portfolio Site](https://oluadun10.github.io)
 
-*Open to PM, PO, Senior PM, Technical PM and Product Analyst/ roles in Health IT, clinical AI, insurtech, and regulated fintech — remote or hybrid.*
+*Open to BA, PO, Senior BA, Technical PM and Product Analyst roles in Health IT, clinical AI, insurtech, and regulated fintech — remote or hybrid.*
