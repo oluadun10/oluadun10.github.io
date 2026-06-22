@@ -74,7 +74,7 @@ Led Agile transformation for 52-person insurance organization. Delivered $1M+ in
 
 ## Let's connect
 
-📧 [Email](oluadun10@gmail.com)
+📧 oluadun10@gmail.com
 💼 [linkedin](https://linkedin.com/in/oluadun)  
 🌐 [Portfolio Site](https://oluadun10.github.io)
 
