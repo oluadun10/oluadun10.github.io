@@ -18,7 +18,7 @@ Over 7 years, I've shipped products that clinicians actually use, payers actuall
 |---|---|
 | 🤖 IDP Prior Auth Automation | $3M+ annual savings · 28% processing time reduction |
 | 🩺 Clinical AI Assistant (0→1) | 30% paperwork reduction · 17–20% adoption gain |
-| 📈 Product Roadmap Execution | ~25% ARR growth across clinical platforms |
+| 📈 Product Roadmap Execution | 32% Defect Re-open Reduction . 27% Sprint Carryover Reduction |
 | ⚡ Enterprise Agile Transformation | 28% faster time-to-market · $1M+ savings identified |
 
 ---
